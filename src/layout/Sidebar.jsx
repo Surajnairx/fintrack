@@ -1,24 +1,51 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import logo from "/favicon.ico";
+import { NavLink } from "react-router-dom";
 
 function Sidebar() {
   return (
-    <div className="bg-linear-to-r bg-black to-blue-900 border-r border-gray-500">
-      <div className="flex items-center border-b border-gray-500 px-7 py-2 gap-2">
-        <img src={logo} className="h-10 rounded-full" alt="" />
-        <h1 className="text-3xl font-bold">FinTrack</h1>
-      </div>
-      <div className=" flex flex-col gap-2 p-5">
-        <div className="w-full p-2 bg-gray-600 rounded-full">
-          <Link to="/">🛖 Dashboard</Link>
-        </div>
-        <div className="w-full p-2">
-          <Link to="/transactions"> 💸 Transaction</Link>
-        </div>
-        <div className="w-full p-2">
-          <Link to="/insights">📊 Insight</Link>
-        </div>
+    <div className="w-64 h-full bg-linear-to-b from-[#0f172a] to-[#020617] border-r border-white/10">
+      <div className="flex flex-col gap-2 p-4 text-sm">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-4 py-2 rounded-lg transition 
+             ${
+               isActive
+                 ? "bg-blue-600/20 text-blue-400 border-l-4 border-blue-500"
+                 : "text-gray-300 hover:bg-white/5 hover:text-white"
+             }`
+          }
+        >
+          🏠 <span>Dashboard</span>
+        </NavLink>
+
+        <NavLink
+          to="/transactions"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-4 py-2 rounded-lg transition 
+             ${
+               isActive
+                 ? "bg-blue-600/20 text-blue-400 border-l-4 border-blue-500"
+                 : "text-gray-300 hover:bg-white/5 hover:text-white"
+             }`
+          }
+        >
+          💸 <span>Transactions</span>
+        </NavLink>
+
+        <NavLink
+          to="/insights"
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-4 py-2 rounded-lg transition 
+             ${
+               isActive
+                 ? "bg-blue-600/20 text-blue-400 border-l-4 border-blue-500"
+                 : "text-gray-300 hover:bg-white/5 hover:text-white"
+             }`
+          }
+        >
+          📊 <span>Insights</span>
+        </NavLink>
       </div>
     </div>
   );
