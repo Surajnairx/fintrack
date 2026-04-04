@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import Modal from "../components/Modal";
 import { useTransactionsStore } from "../store/transactionStore";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 function Transactions({ role = "Admin" }) {
   const transactions = useTransactionsStore((state) => state.transactions);
@@ -16,17 +18,47 @@ function Transactions({ role = "Admin" }) {
   const setFilterType = useTransactionsStore((state) => state.setFilterType);
 
   const modalRef = useRef();
+  const headerRef = useRef();
+  const controlsRef = useRef();
+  const tableRef = useRef();
 
-  // Filtered transactions
   const filteredData = transactions.filter(
     (txn) =>
       txn.category.toLowerCase().includes(search.toLowerCase()) &&
       (filterType === "All" || txn.type === filterType),
   );
 
+  // Minimal animation
+  useGSAP(() => {
+    if (headerRef.current) {
+      gsap.from(headerRef.current, { y: -10, opacity: 0, duration: 0.5 });
+    }
+
+    if (controlsRef.current) {
+      gsap.from(controlsRef.current.children, {
+        y: 5,
+        opacity: 0,
+        stagger: 0.05,
+        duration: 0.3,
+      });
+    }
+
+    if (tableRef.current) {
+      gsap.from(tableRef.current.children, {
+        y: 5,
+        opacity: 0,
+        stagger: 0.5,
+        duration: 0.3,
+      });
+    }
+  }, []);
+
   return (
     <div className="h-full flex flex-col gap-6">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div
+        ref={headerRef}
+        className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+      >
         <div>
           <h1 className="text-2xl font-semibold text-white">Transactions</h1>
           <p className="text-sm text-gray-400">
@@ -34,7 +66,7 @@ function Transactions({ role = "Admin" }) {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
+        <div ref={controlsRef} className="flex flex-wrap gap-3">
           <input
             type="text"
             placeholder="Search category..."
@@ -63,79 +95,77 @@ function Transactions({ role = "Admin" }) {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col">
-        <div className="overflow-y-auto">
-          <table className="w-full text-sm text-gray-300">
-            <thead className="sticky top-0 bg-[#020617] text-gray-400 border-b border-white/10">
-              <tr>
-                <th className="text-left py-3 px-2">Date</th>
-                <th className="text-left py-3 px-2">Category</th>
-                <th className="text-left py-3 px-2">Amount</th>
-                <th className="text-left py-3 px-2">Type</th>
+      <div className="flex-1 min-h-0 bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col overflow-x-auto">
+        <table ref={tableRef} className="w-full text-sm text-gray-300">
+          <thead className="sticky top-0 bg-[#020617] text-gray-400 border-b border-white/10">
+            <tr>
+              <th className="text-left py-3 px-2">Date</th>
+              <th className="text-left py-3 px-2">Category</th>
+              <th className="text-left py-3 px-2">Amount</th>
+              <th className="text-left py-3 px-2">Type</th>
+              {role === "Admin" && (
+                <th className="text-left py-3 px-2">Actions</th>
+              )}
+            </tr>
+          </thead>
+          <tbody>
+            {filteredData.map((txn) => (
+              <tr
+                key={txn.id}
+                className="border-b border-white/5 hover:bg-white/5 transition"
+              >
+                <td className="py-3 px-2">{txn.date}</td>
+                <td className="px-2">
+                  <span className="px-2 py-1 rounded-md bg-white/10 text-xs">
+                    {txn.category}
+                  </span>
+                </td>
+                <td
+                  className={`px-2 font-medium ${txn.amount > 0 ? "text-green-400" : "text-red-400"}`}
+                >
+                  {txn.amount > 0 ? "+" : ""}₹{txn.amount}
+                </td>
+                <td className="px-2">
+                  <span
+                    className={`px-2 py-1 text-xs rounded-md ${
+                      txn.type === "Income"
+                        ? "bg-green-500/10 text-green-400"
+                        : "bg-red-500/10 text-red-400"
+                    }`}
+                  >
+                    {txn.type}
+                  </span>
+                </td>
                 {role === "Admin" && (
-                  <th className="text-left py-3 px-2">Actions</th>
+                  <td className="px-2">
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => modalRef.current.open(txn)}
+                        className="text-blue-400 hover:text-blue-300 text-xs"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => deleteTransaction(txn.id)}
+                        className="text-red-400 hover:text-red-300 text-xs"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
                 )}
               </tr>
-            </thead>
-            <tbody>
-              {filteredData.map((txn) => (
-                <tr
-                  key={txn.id}
-                  className="border-b border-white/5 hover:bg-white/5 transition"
-                >
-                  <td className="py-3 px-2">{txn.date}</td>
-                  <td className="px-2">
-                    <span className="px-2 py-1 rounded-md bg-white/10 text-xs">
-                      {txn.category}
-                    </span>
-                  </td>
-                  <td
-                    className={`px-2 font-medium ${txn.amount > 0 ? "text-green-400" : "text-red-400"}`}
-                  >
-                    {txn.amount > 0 ? "+" : ""}₹{txn.amount}
-                  </td>
-                  <td className="px-2">
-                    <span
-                      className={`px-2 py-1 text-xs rounded-md ${
-                        txn.type === "Income"
-                          ? "bg-green-500/10 text-green-400"
-                          : "bg-red-500/10 text-red-400"
-                      }`}
-                    >
-                      {txn.type}
-                    </span>
-                  </td>
-                  {role === "Admin" && (
-                    <td className="px-2">
-                      <div className="flex gap-3">
-                        <button
-                          onClick={() => modalRef.current.open(txn)}
-                          className="text-blue-400 hover:text-blue-300 text-xs"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => deleteTransaction(txn.id)}
-                          className="text-red-400 hover:text-red-300 text-xs"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  )}
-                </tr>
-              ))}
+            ))}
 
-              {filteredData.length === 0 && (
-                <tr>
-                  <td colSpan="5" className="text-center py-10 text-gray-500">
-                    No transactions found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+            {filteredData.length === 0 && (
+              <tr>
+                <td colSpan="5" className="text-center py-10 text-gray-500">
+                  No transactions found
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
 
       <Modal ref={modalRef} onSubmit={addOrUpdateTransaction} />
