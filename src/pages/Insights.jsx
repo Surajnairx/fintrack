@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useTransactionsStore } from "../store/transactionStore";
+import { useTransactionsStore } from "../store/appStore";
 import { ShoppingCart, DollarSign, PiggyBank } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
