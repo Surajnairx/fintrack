@@ -1,7 +1,9 @@
 import React from "react";
 import logo from "/favicon.ico";
-
+import { useTransactionsStore } from "../store/transactionStore";
 function Navbar({ setIsOpen }) {
+  const userRole = useTransactionsStore((state) => state.userRole);
+  const setUserRole = useTransactionsStore((state) => state.setUserRole);
   return (
     <div
       className="h-14 md:h-16 flex items-center justify-between px-3 md:px-6
@@ -35,14 +37,16 @@ function Navbar({ setIsOpen }) {
       <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
         <div className="relative">
           <select
+            value={userRole}
+            onChange={(e) => setUserRole(e.target.value)}
             className="appearance-none bg-white/5 text-gray-200
-                       border border-white/10 rounded-md md:rounded-lg
-                       px-2 md:px-4 py-1 text-xs md:text-sm
-                       pr-6 md:pr-8
-                       focus:outline-none focus:ring-1 focus:ring-blue-500"
+             border border-white/10 rounded-md md:rounded-lg
+             px-2 md:px-4 py-1 text-xs md:text-sm
+             pr-6 md:pr-8
+             focus:outline-none focus:ring-1 focus:ring-blue-500"
           >
-            <option>Admin</option>
-            <option>Viewer</option>
+            <option value="admin">Admin</option>
+            <option value="viewer">Viewer</option>
           </select>
 
           <span className="absolute right-1 md:right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[10px] md:text-xs">
@@ -52,10 +56,6 @@ function Navbar({ setIsOpen }) {
 
         <button className="text-gray-400 hover:text-white text-sm md:text-lg">
           🌙
-        </button>
-
-        <button className="text-gray-400 hover:text-white text-sm md:text-lg">
-          ⚙️
         </button>
       </div>
     </div>

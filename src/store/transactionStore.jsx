@@ -94,8 +94,14 @@ export const useTransactionsStore = create((set, get) => ({
   search: "",
   filterType: "All",
 
+  userRole: "admin", // "admin" | "viewer"
+  setUserRole: (role) => set({ userRole: role }),
+
   addOrUpdateTransaction: (txn) => {
+    if (get().userRole !== "admin") return; // 🔒 block viewers
+
     let updatedTransactions;
+
     if (txn.id) {
       updatedTransactions = get().transactions.map((t) =>
         Number(t.id) === Number(txn.id)
@@ -112,7 +118,7 @@ export const useTransactionsStore = create((set, get) => ({
       updatedTransactions = [
         {
           ...txn,
-          id: Date.now(),
+          id: crypto.randomUUID(), // ✅ better id
           amount:
             txn.type === "Expense"
               ? -Math.abs(txn.amount)
@@ -127,9 +133,12 @@ export const useTransactionsStore = create((set, get) => ({
   },
 
   deleteTransaction: (id) => {
+    if (get().userRole !== "admin") return; // 🔒 block viewers
+
     const updatedTransactions = get().transactions.filter(
-      (txn) => Number(txn.id) !== Number(id),
+      (txn) => String(txn.id) !== String(id),
     );
+
     set({ transactions: updatedTransactions });
     saveToLocalStorage(updatedTransactions);
   },

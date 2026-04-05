@@ -4,7 +4,7 @@ import { useTransactionsStore } from "../store/transactionStore";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-function Transactions({ role = "Admin" }) {
+function Transactions() {
   const transactions = useTransactionsStore((state) => state.transactions);
   const search = useTransactionsStore((state) => state.search);
   const filterType = useTransactionsStore((state) => state.filterType);
@@ -16,7 +16,7 @@ function Transactions({ role = "Admin" }) {
   );
   const setSearch = useTransactionsStore((state) => state.setSearch);
   const setFilterType = useTransactionsStore((state) => state.setFilterType);
-
+  const userRole = useTransactionsStore((state) => state.userRole);
   const modalRef = useRef();
   const headerRef = useRef();
   const controlsRef = useRef();
@@ -35,9 +35,8 @@ function Transactions({ role = "Admin" }) {
     }
 
     if (controlsRef.current) {
-      gsap.from(controlsRef.current.children, {
+      gsap.from(controlsRef.current.childrens, {
         y: 5,
-        opacity: 0,
         stagger: 0.05,
         duration: 0.3,
       });
@@ -84,7 +83,7 @@ function Transactions({ role = "Admin" }) {
             <option>Expense</option>
           </select>
 
-          {role === "Admin" && (
+          {userRole === "admin" && (
             <button
               onClick={() => modalRef.current.open()}
               className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition"
@@ -103,9 +102,6 @@ function Transactions({ role = "Admin" }) {
               <th className="text-left py-3 px-2">Category</th>
               <th className="text-left py-3 px-2">Amount</th>
               <th className="text-left py-3 px-2">Type</th>
-              {role === "Admin" && (
-                <th className="text-left py-3 px-2">Actions</th>
-              )}
             </tr>
           </thead>
           <tbody>
@@ -136,8 +132,9 @@ function Transactions({ role = "Admin" }) {
                     {txn.type}
                   </span>
                 </td>
-                {role === "Admin" && (
-                  <td className="px-2">
+
+                <td className="px-2">
+                  {userRole === "admin" ? (
                     <div className="flex gap-3">
                       <button
                         onClick={() => modalRef.current.open(txn)}
@@ -152,8 +149,8 @@ function Transactions({ role = "Admin" }) {
                         Delete
                       </button>
                     </div>
-                  </td>
-                )}
+                  ) : null}
+                </td>
               </tr>
             ))}
 
