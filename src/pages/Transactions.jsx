@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import Modal from "../components/Modal";
-import { useTransactionsStore } from "../store/transactionStore";
+import { useTransactionsStore } from "../store/appStore";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 

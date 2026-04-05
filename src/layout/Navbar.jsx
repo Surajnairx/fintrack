@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "/favicon.ico";
-import { useTransactionsStore } from "../store/transactionStore";
+import { useTransactionsStore } from "../store/appStore";
 function Navbar({ setIsOpen }) {
   const userRole = useTransactionsStore((state) => state.userRole);
   const setUserRole = useTransactionsStore((state) => state.setUserRole);

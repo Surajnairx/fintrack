@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Card from "../components/Card";
-import { useTransactionsStore } from "../store/transactionStore";
+import { useTransactionsStore } from "../store/appStore";
 import {
   LineChart,
   Line,
