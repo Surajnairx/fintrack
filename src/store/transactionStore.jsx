@@ -3,7 +3,80 @@ import { create } from "zustand";
 const loadFromLocalStorage = () => {
   try {
     const stored = localStorage.getItem("transactions");
-    return stored ? JSON.parse(stored) : [];
+    return stored
+      ? JSON.parse(stored)
+      : [
+          {
+            id: 1,
+            category: "Salary",
+            amount: 50000,
+            type: "Income",
+            date: "2026-04-01",
+          },
+          {
+            id: 2,
+            category: "Freelance",
+            amount: 12000,
+            type: "Income",
+            date: "2026-04-02",
+          },
+          {
+            id: 3,
+            category: "Groceries",
+            amount: -2500,
+            type: "Expense",
+            date: "2026-04-02",
+          },
+          {
+            id: 4,
+            category: "Rent",
+            amount: -15000,
+            type: "Expense",
+            date: "2026-04-03",
+          },
+          {
+            id: 5,
+            category: "Electricity Bill",
+            amount: -1800,
+            type: "Expense",
+            date: "2026-04-03",
+          },
+          {
+            id: 6,
+            category: "Dining Out",
+            amount: -1200,
+            type: "Expense",
+            date: "2026-04-04",
+          },
+          {
+            id: 7,
+            category: "Transport",
+            amount: -600,
+            type: "Expense",
+            date: "2026-04-04",
+          },
+          {
+            id: 8,
+            category: "Movie",
+            amount: -500,
+            type: "Expense",
+            date: "2026-04-04",
+          },
+          {
+            id: 9,
+            category: "Investment Return",
+            amount: 3000,
+            type: "Income",
+            date: "2026-04-05",
+          },
+          {
+            id: 10,
+            category: "Shopping",
+            amount: -3500,
+            type: "Expense",
+            date: "2026-04-05",
+          },
+        ];
   } catch {
     return [];
   }
