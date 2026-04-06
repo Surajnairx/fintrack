@@ -28,7 +28,10 @@ function Transactions() {
       (filterType === "All" || txn.type === filterType),
   );
 
-  // Minimal animation
+  const formatDate = (dateStr) => {
+    const options = { day: "numeric", month: "short", year: "numeric" };
+    return new Date(dateStr).toLocaleDateString(undefined, options); // "
+  };
   useGSAP(() => {
     if (headerRef.current) {
       gsap.from(headerRef.current, { y: -10, opacity: 0, duration: 0.5 });
@@ -108,14 +111,16 @@ function Transactions() {
           <tbody>
             {filteredData.map((txn) => (
               <tr key={txn.id} className="border-b hover:bg-white/5 transition">
-                <td className="py-3 px-2">{txn.date}</td>
+                <td className="py-3 px-4 flex text-xs md:text-md whitespace-nowrap">
+                  {formatDate(txn.date)}
+                </td>
                 <td className="px-2">
-                  <span className="px-2 py-1 rounded-md bg-white/10 text-xs">
+                  <span className="px-2 py-1 rounded-md bg-white/10 text-xs md:text-md whitespace-nowrap">
                     {txn.category}
                   </span>
                 </td>
                 <td
-                  className={`px-2 font-medium shrink-0 ${txn.amount > 0 ? "text-green-400" : "text-red-400"}`}
+                  className={`px-2 font-medium text-xs md:text-md whitespace-nowrap shrink-0 ${txn.amount > 0 ? "text-green-400" : "text-red-400"}`}
                 >
                   {txn.amount > 0 ? "+" : ""}₹{txn.amount}
                 </td>

@@ -34,7 +34,7 @@ function Navbar({ setIsOpen }) {
         </h2>
       </div>
 
-      <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
+      <div className="flex items-center gap-2 md:gap-6">
         <div className="relative">
           <select
             value={userRole}
