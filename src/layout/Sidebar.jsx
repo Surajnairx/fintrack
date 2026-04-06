@@ -45,7 +45,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                }`
             }
           >
-            <House size={24} className="text-blue-500" /> <span>Dashboard</span>
+            <House size={24} /> <span>Dashboard</span>
           </NavLink>
 
           <NavLink

@@ -92,9 +92,9 @@ function Transactions() {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 bg-white/5 border  rounded-xl p-4 flex flex-col overflow-x-auto">
+      <div className="flex-1 min-h-0 border  rounded-xl p-4 flex flex-col overflow-x-auto">
         <table ref={tableRef} className="w-full text-sm ">
-          <thead className="sticky top-0  border-b ">
+          <thead className="border-b p-5">
             <tr>
               <th className="text-left py-3 px-2">Date</th>
               <th className="text-left py-3 px-2">Category</th>
@@ -107,10 +107,7 @@ function Transactions() {
           </thead>
           <tbody>
             {filteredData.map((txn) => (
-              <tr
-                key={txn.id}
-                className="border-b  hover:bg-white/5 transition"
-              >
+              <tr key={txn.id} className="border-b hover:bg-white/5 transition">
                 <td className="py-3 px-2">{txn.date}</td>
                 <td className="px-2">
                   <span className="px-2 py-1 rounded-md bg-white/10 text-xs">
@@ -118,7 +115,7 @@ function Transactions() {
                   </span>
                 </td>
                 <td
-                  className={`px-2 font-medium ${txn.amount > 0 ? "text-green-400" : "text-red-400"}`}
+                  className={`px-2 font-medium shrink-0 ${txn.amount > 0 ? "text-green-400" : "text-red-400"}`}
                 >
                   {txn.amount > 0 ? "+" : ""}₹{txn.amount}
                 </td>
