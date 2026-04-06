@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useTransactionsStore } from "../store/appStore";
+import { House, Wallet, ChartBarBig } from "lucide-react";
 function Sidebar({ isOpen, setIsOpen }) {
   const theme = useTransactionsStore((state) => state.theme);
   return (
@@ -44,7 +45,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                }`
             }
           >
-            🏠 <span>Dashboard</span>
+            <House size={24} className="text-blue-500" /> <span>Dashboard</span>
           </NavLink>
 
           <NavLink
@@ -59,7 +60,8 @@ function Sidebar({ isOpen, setIsOpen }) {
                }`
             }
           >
-            💸 <span>Transactions</span>
+            <Wallet />
+            <span>Transactions</span>
           </NavLink>
 
           <NavLink
@@ -74,7 +76,8 @@ function Sidebar({ isOpen, setIsOpen }) {
                }`
             }
           >
-            📊 <span>Insights</span>
+            <ChartBarBig />
+            <span>Insights</span>
           </NavLink>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import logo from "/favicon.ico";
 import { useTransactionsStore } from "../store/appStore";
+import { Sun, Moon } from "lucide-react";
 function Navbar({ setIsOpen }) {
   const userRole = useTransactionsStore((state) => state.userRole);
   const setUserRole = useTransactionsStore((state) => state.setUserRole);
@@ -55,9 +56,9 @@ function Navbar({ setIsOpen }) {
 
         <button
           onClick={toggleTheme}
-          className="text-gray-400 hover:text-white text-sm md:text-lg"
+          className="text-gray-400 hover:text-gray-400/20 text-sm md:text-lg"
         >
-          {theme === "dark" ? "☀️" : "🌙"}
+          {theme === "dark" ? <Sun /> : <Moon />}
         </button>
       </div>
     </div>
