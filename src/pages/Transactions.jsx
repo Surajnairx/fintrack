@@ -120,7 +120,7 @@ function Transactions() {
                   </span>
                 </td>
                 <td
-                  className={`px-2 font-medium text-xs md:text-md whitespace-nowrap shrink-0 ${txn.amount > 0 ? "text-green-400" : "text-red-400"}`}
+                  className={`px-2 font-medium text-xs md:text-md whitespace-nowrap ${txn.amount > 0 ? "text-green-400" : "text-red-400"}`}
                 >
                   {txn.amount > 0 ? "+" : ""}₹{txn.amount}
                 </td>
