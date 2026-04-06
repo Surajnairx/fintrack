@@ -1,12 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import { useTransactionsStore } from "../store/appStore";
 function Sidebar({ isOpen, setIsOpen }) {
+  const theme = useTransactionsStore((state) => state.theme);
   return (
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          className={`fixed inset-0 md:hidden ${
+            theme === "dark" ? "bg-black/50" : "bg-white"
+          }`}
           onClick={() => setIsOpen(false)}
         />
       )}
@@ -14,19 +17,16 @@ function Sidebar({ isOpen, setIsOpen }) {
       <div
         className={`
           fixed md:static top-0 left-0 h-full w-64 z-50
-          bg-linear-to-b from-[#0f172a] to-[#020617]
-          border-r border-white/10
+           ${theme === "dark" ? "bg-black" : "bg-white"}
+          border-r 
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
           shadow-xl md:shadow-none
         `}
       >
-        <div className="md:hidden flex justify-end p-4">
-          <button
-            onClick={() => setIsOpen(false)}
-            className="text-gray-300 text-xl"
-          >
+        <div className="md:hidden flex justify-end p-4 ">
+          <button onClick={() => setIsOpen(false)} className="text-xl">
             ✕
           </button>
         </div>
@@ -40,7 +40,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                ${
                  isActive
                    ? "bg-blue-600/20 text-blue-400 border-l-4 border-blue-500"
-                   : "text-gray-300 hover:bg-white/5 hover:text-white"
+                   : " hover:bg-gray-300/20  hover:text-gray-400 "
                }`
             }
           >
@@ -55,7 +55,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                ${
                  isActive
                    ? "bg-blue-600/20 text-blue-400 border-l-4 border-blue-500"
-                   : "text-gray-300 hover:bg-white/5 hover:text-white"
+                   : " hover:bg-gray-300/20  hover:text-gray-400 "
                }`
             }
           >
@@ -70,7 +70,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                ${
                  isActive
                    ? "bg-blue-600/20 text-blue-400 border-l-4 border-blue-500"
-                   : "text-gray-300 hover:bg-white/5 hover:text-white"
+                   : "  hover:bg-gray-300/20  hover:text-gray-400 "
                }`
             }
           >

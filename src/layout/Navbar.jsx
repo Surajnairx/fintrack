@@ -1,35 +1,34 @@
-import React from "react";
 import logo from "/favicon.ico";
 import { useTransactionsStore } from "../store/appStore";
 function Navbar({ setIsOpen }) {
   const userRole = useTransactionsStore((state) => state.userRole);
   const setUserRole = useTransactionsStore((state) => state.setUserRole);
+  const theme = useTransactionsStore((state) => state.theme);
+  const toggleTheme = useTransactionsStore((state) => state.toggleTheme);
   return (
     <div
       className="h-14 md:h-16 flex items-center justify-between px-3 md:px-6
-                 bg-linear-to-r from-[#0f172a] to-[#1e293b]
-                 border-b border-white/10 backdrop-blur-md"
+  border-b
+   transition-colors duration-300"
     >
       <div className="flex items-center gap-3 md:gap-6">
         <button
-          className="md:hidden text-white text-xl"
+          className="md:hidden text-dark text-xl"
           onClick={() => setIsOpen(true)}
         >
           ☰
         </button>
-        <div className="flex items-center gap-2 pr-3 md:pr-6 border-r border-white/10">
+        <div className="flex items-center gap-2 pr-3 md:pr-6 border-r ">
           <img
             src={logo}
             className="h-7 w-7 md:h-9 md:w-9 rounded-full"
             alt="logo"
           />
 
-          <h1 className="text-sm md:text-xl font-semibold text-white">
-            FinTrack
-          </h1>
+          <h1 className="text-sm md:text-xl font-semibold">FinTrack</h1>
         </div>
 
-        <h2 className="text-xs hidden md:block md:text-lg text-gray-300">
+        <h2 className="text-xs hidden md:block md:text-lg ">
           Finance Dashboard
         </h2>
       </div>
@@ -39,11 +38,11 @@ function Navbar({ setIsOpen }) {
           <select
             value={userRole}
             onChange={(e) => setUserRole(e.target.value)}
-            className="appearance-none bg-white/5 text-gray-200
-             border border-white/10 rounded-md md:rounded-lg
-             px-2 md:px-4 py-1 text-xs md:text-sm
-             pr-6 md:pr-8
-             focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="appearance-none border
+  rounded-md md:rounded-lg
+  px-2 md:px-4 py-1 text-xs md:text-sm
+  pr-6 md:pr-8
+  focus:outline-none focus:ring-1 focus:ring-blue-500"
           >
             <option value="admin">Admin</option>
             <option value="viewer">Viewer</option>
@@ -54,8 +53,11 @@ function Navbar({ setIsOpen }) {
           </span>
         </div>
 
-        <button className="text-gray-400 hover:text-white text-sm md:text-lg">
-          🌙
+        <button
+          onClick={toggleTheme}
+          className="text-gray-400 hover:text-white text-sm md:text-lg"
+        >
+          {theme === "dark" ? "☀️" : "🌙"}
         </button>
       </div>
     </div>

@@ -59,10 +59,8 @@ function Transactions() {
         className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
       >
         <div>
-          <h1 className="text-2xl font-semibold text-white">Transactions</h1>
-          <p className="text-sm text-gray-400">
-            Manage and track your financial activity
-          </p>
+          <h1 className="text-2xl font-semibold">Transactions</h1>
+          <p className="text-sm">Manage and track your financial activity</p>
         </div>
 
         <div ref={controlsRef} className="flex flex-wrap gap-3">
@@ -71,12 +69,12 @@ function Transactions() {
             placeholder="Search category..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition"
+            className=" border rounded-lg px-4 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition"
           />
           <select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
-            className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className=" border rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
           >
             <option>All</option>
             <option>Income</option>
@@ -94,21 +92,24 @@ function Transactions() {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col overflow-x-auto">
-        <table ref={tableRef} className="w-full text-sm text-gray-300">
-          <thead className="sticky top-0 bg-[#020617] text-gray-400 border-b border-white/10">
+      <div className="flex-1 min-h-0 bg-white/5 border  rounded-xl p-4 flex flex-col overflow-x-auto">
+        <table ref={tableRef} className="w-full text-sm ">
+          <thead className="sticky top-0  border-b ">
             <tr>
               <th className="text-left py-3 px-2">Date</th>
               <th className="text-left py-3 px-2">Category</th>
               <th className="text-left py-3 px-2">Amount</th>
               <th className="text-left py-3 px-2">Type</th>
+              {userRole === "admin" ? (
+                <th className="text-left py-3 px-2">Actions</th>
+              ) : null}
             </tr>
           </thead>
           <tbody>
             {filteredData.map((txn) => (
               <tr
                 key={txn.id}
-                className="border-b border-white/5 hover:bg-white/5 transition"
+                className="border-b  hover:bg-white/5 transition"
               >
                 <td className="py-3 px-2">{txn.date}</td>
                 <td className="px-2">

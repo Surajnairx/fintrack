@@ -90,7 +90,7 @@ const saveToLocalStorage = (transactions) => {
 
 export const useTransactionsStore = create((set, get) => ({
   transactions: loadFromLocalStorage(),
-
+  theme: localStorage.getItem("theme") || "dark",
   search: "",
   filterType: "All",
 
@@ -133,7 +133,7 @@ export const useTransactionsStore = create((set, get) => ({
   },
 
   deleteTransaction: (id) => {
-    if (get().userRole !== "admin") return; // 🔒 block viewers
+    if (get().userRole !== "admin") return;
 
     const updatedTransactions = get().transactions.filter(
       (txn) => String(txn.id) !== String(id),
@@ -154,4 +154,10 @@ export const useTransactionsStore = create((set, get) => ({
         (filterType === "All" || txn.type === filterType),
     );
   },
+  toggleTheme: () =>
+    set((state) => {
+      const newTheme = state.theme === "dark" ? "light" : "dark";
+      localStorage.setItem("theme", newTheme);
+      return { theme: newTheme };
+    }),
 }));
