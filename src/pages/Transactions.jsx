@@ -56,7 +56,7 @@ function Transactions() {
   }, []);
 
   return (
-    <div className="h-full flex flex-col gap-6">
+    <div className=" flex flex-col gap-6">
       <div
         ref={headerRef}
         className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
@@ -95,7 +95,7 @@ function Transactions() {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 border  rounded-xl p-4 flex flex-col overflow-x-auto">
+      <div className="flex-1 border rounded-xl p-4 flex flex-col overflow-x-auto">
         <table ref={tableRef} className="w-full text-sm ">
           <thead className="border-b p-5">
             <tr>
