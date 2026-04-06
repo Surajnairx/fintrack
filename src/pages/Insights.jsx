@@ -138,7 +138,7 @@ function Insights() {
               flex flex-col gap-3
             "
           >
-            <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+            <div className="flex items-center gap-2">
               {card.icon}
               <p className="text-sm font-medium">{card.title}</p>
             </div>
