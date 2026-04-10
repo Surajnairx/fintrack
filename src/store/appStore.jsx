@@ -98,14 +98,15 @@ export const useTransactionsStore = create((set, get) => ({
   setUserRole: (role) => set({ userRole: role }),
 
   addOrUpdateTransaction: (txn) => {
-    if (get().userRole !== "admin") return; // 🔒 block viewers
+    if (get().userRole !== "admin") return;
 
     let updatedTransactions;
 
     if (txn.id) {
       updatedTransactions = get().transactions.map((t) =>
-        Number(t.id) === Number(txn.id)
+        String(t.id) === String(txn.id)
           ? {
+              ...t,
               ...txn,
               amount:
                 txn.type === "Expense"
@@ -118,7 +119,7 @@ export const useTransactionsStore = create((set, get) => ({
       updatedTransactions = [
         {
           ...txn,
-          id: crypto.randomUUID(), // ✅ better id
+          id: crypto.randomUUID(),
           amount:
             txn.type === "Expense"
               ? -Math.abs(txn.amount)
